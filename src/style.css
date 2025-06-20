@@ -125,11 +125,9 @@ select {
   padding: 8px;
   border-radius: 4px;
   margin-top: 4px;
-  border: 1px solid #ccc;
+  border: 1px solid #ccc !important;
   background: #fff;
-  /* 白色背景 */
   color: #222;
-  /* 深色字體 */
 }
 
 .remember input[type="checkbox"] {
@@ -220,13 +218,18 @@ label {
 .search-bar {
   position: relative;
   display: flex;
-  width: 85%;
+  width: 88%;
   align-items: center;
   background: #f7f9fa;
   border-radius: 10px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
   padding: 4px 8px;
   margin: auto;
+}
+
+input.search-input {
+    border: none !important;
+    max-width: 100%;
 }
 
 .search-bar-custom {
@@ -249,17 +252,6 @@ label {
   padding: 4px 8px;
 }
 
-.search-input {
-  border: none;
-  outline: none;
-  background: transparent;
-  padding: 12px 8px;
-  font-size: 16px;
-  flex: 1;
-  border-radius: 8px;
-  color: #333;
-  width: -webkit-fill-available;
-}
 
 .search-btn {
   position: absolute;

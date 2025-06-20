@@ -41,7 +41,9 @@
             <div v-if="passwordError" class="error-msg">密碼輸入錯誤</div>
         </div>
 
-        <button class="submit-btn">註冊</button>
+        <router-link to="/login">
+            <button class="submit-btn">註冊</button>
+        </router-link>
     </div>
 </template>
 
@@ -80,5 +82,10 @@ function validatePassword() {
     border-radius: 6px;
     font-weight: bold;
     margin-top: 12px;
+}
+
+.register-wrapper {
+    height: calc(100% - 66px) !important;
+    overflow: auto;
 }
 </style>

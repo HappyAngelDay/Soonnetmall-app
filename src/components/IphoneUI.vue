@@ -53,8 +53,7 @@ onUnmounted(() => {
 
 <style scoped>
 .frame {
-    width: 320px;
-    height: 650px;
+    height: 629px;
     background-color: #ffffff;
     position: relative;
     margin: 0px auto;

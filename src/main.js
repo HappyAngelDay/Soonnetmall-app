@@ -10,7 +10,12 @@ import Framework7Vue, { registerComponents } from 'framework7-vue/bundle'
 
 import 'framework7/css'
 import '@vuepic/vue-datepicker/dist/main.css'
+import vuetify from './plugins/vuetify'
 
 // 啟用 Framework7 Vue
 Framework7.use(Framework7Vue)
-createApp(App).use(router).component('VueDatePicker', VueDatePicker).mount('#app')
+const app = createApp(App)
+app.use(router)
+app.use(vuetify)
+app.component('VueDatePicker', VueDatePicker)
+app.mount('#app')

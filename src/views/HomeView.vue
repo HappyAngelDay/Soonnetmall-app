@@ -144,4 +144,10 @@ export default {
 };
 </script>
 
-<style scoped></style>
+
+<style scoped>
+input.search-input {
+    border: none !important;
+    max-width: 100%;
+}
+</style>

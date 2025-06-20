@@ -9,11 +9,15 @@
     "gdplay": "npm run build && git add . && git commit -m \"Deploy\" && git subtree push --prefix dist origin gh-pages"
   },
   "dependencies": {
+    "@mdi/font": "^7.4.47",
     "@vuepic/vue-datepicker": "^11.0.2",
     "framework7": "^8.3.4",
     "framework7-vue": "^8.3.4",
+    "material-design-icons-iconfont": "^6.7.0",
+    "sass": "^1.89.2",
     "vue": "^3.5.13",
-    "vue-router": "^4.5.1"
+    "vue-router": "^4.5.1",
+    "vuetify": "^3.8.0-beta.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.2.3",

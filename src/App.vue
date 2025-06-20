@@ -1,9 +1,15 @@
 <template>
-    <f7-app>
-      <IphoneUI>
-        <router-view />
-      </IphoneUI>
-    </f7-app>
+  <v-app>
+    <v-main>
+      <v-container class="fill-height d-flex justify-center align-center">
+        <f7-app>
+          <IphoneUI>
+            <router-view />
+          </IphoneUI>
+        </f7-app>
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
 
 <script setup>

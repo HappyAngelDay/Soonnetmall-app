@@ -58,9 +58,16 @@
     border: 1px solid #198654;
 }
 
+.sign-up-button {
+    background-color: #198654;
+    color: white;
+    border: none;
+}
+
 .login-button {
     background-color: transparent;
     border: 1px solid #fff;
+    color: white;
 }
 
 </style>
