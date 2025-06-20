@@ -8,9 +8,7 @@
 
 <script setup>
 import IphoneUI from './components/IphoneUI.vue'
-
 </script>
-
 
 <style>
 body {

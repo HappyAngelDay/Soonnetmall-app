@@ -1,19 +1,16 @@
 import { createApp } from 'vue'
 import './style.css'
 import App from './App.vue'
-import router from './router'
+import router from './router';
+import VueDatePicker from '@vuepic/vue-datepicker'
 
-// Framework7 主檔案（完整版）
-import Framework7 from 'framework7'
+// 引入 Framework7
+import Framework7 from 'framework7/lite-bundle'
+import Framework7Vue, { registerComponents } from 'framework7-vue/bundle'
 
-// Vue plugin
-import Framework7Vue, { registerComponents } from '../node_modules/framework7-vue/framework7-vue-bundle'
+import 'framework7/css'
+import '@vuepic/vue-datepicker/dist/main.css'
 
 // 啟用 Framework7 Vue
 Framework7.use(Framework7Vue)
-
-const app = createApp(App)
-app.use(router)
-
-
-app.mount('#app')
+createApp(App).use(router).component('VueDatePicker', VueDatePicker).mount('#app')

@@ -1,13 +1,12 @@
 {
-  "name": "soonnetmall-app",
-  "private": true,
+  "name": "soonnet-app",
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "vue": "vite"
+    "deploy": "git add . && git commit -m \"Deploy\" && git push origin main",
+    "gdplay": "npm run deploy"
   },
   "dependencies": {
     "@vuepic/vue-datepicker": "^11.0.2",
