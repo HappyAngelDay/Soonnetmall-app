@@ -53,12 +53,12 @@ onUnmounted(() => {
 
 <style scoped>
 .frame {
-    height: 629px;
+    height: 633px;
     background-color: #ffffff;
     position: relative;
     margin: 0px auto;
     border: 6px solid #bdbbbb;
-    border-radius: 50px;
+    border-radius: 55px;
     box-shadow: 14px 21px 42px 10px rgba(0, 0, 0, .2);
     font-family: 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', Arial, Helvetica, system-ui, Avenir, sans-serif;
 }
@@ -79,7 +79,7 @@ onUnmounted(() => {
 
 .frame-header {
     position: absolute;
-    width: 170px;
+    width: 140px;
     height: 24px;
     top: -2px;
     left: 50%;

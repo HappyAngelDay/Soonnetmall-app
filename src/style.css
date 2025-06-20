@@ -58,6 +58,17 @@ button:focus-visible {
   text-align: center;
 }
 
+
+#app>div {
+  background: #242424 !important;
+}
+
+.v-container {
+  padding: 0 !important;
+  max-height: fit-content;
+}
+
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

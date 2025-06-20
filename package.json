@@ -6,7 +6,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "deploy": "git add . && git commit -m \"Deploy\" && git push origin main",
-    "gdplay": "npm run build && touch dist/.nojekyll && git add dist && git commit -m \"Deploy\" && git subtree push --prefix dist origin main --force"
+    "gdplay": "npm run build && echo > dist/.nojekyll && git add dist && git commit -m \"Deploy\" || echo \"No changes to commit\" && git subtree push --prefix dist origin gh-pages --force"
   },
   "dependencies": {
     "@vuepic/vue-datepicker": "^11.0.2",
