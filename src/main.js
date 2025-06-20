@@ -4,16 +4,17 @@ import App from './App.vue'
 import router from './router';
 import VueDatePicker from '@vuepic/vue-datepicker'
 
-// 引入 Framework7
-import Framework7 from 'framework7/lite-bundle'
-import Framework7Vue, { registerComponents } from 'framework7-vue/bundle'
+// 匯入 Vuetify 所需資源
+import 'vuetify/styles'                 // Vuetify 核心 CSS
+import { createVuetify } from 'vuetify' // Vuetify 核心插件
+import * as components from 'vuetify/components'   // 所有元件
+import * as directives from 'vuetify/directives'   // 所有指令
 
-import 'framework7/css'
-import '@vuepic/vue-datepicker/dist/main.css'
-import vuetify from './plugins/vuetify'
+const vuetify = createVuetify({
+  components,
+  directives,
+})
 
-// 啟用 Framework7 Vue
-Framework7.use(Framework7Vue)
 const app = createApp(App)
 app.use(router)
 app.use(vuetify)

@@ -227,9 +227,14 @@ label {
   margin: auto;
 }
 
+.search-bar>div {
+    text-align: left;
+}
+
 input.search-input {
     border: none !important;
-    max-width: 100%;
+    max-width: calc(100% - 30px) !important;
+    margin-right: 20px;
 }
 
 .search-bar-custom {
