@@ -4,7 +4,7 @@
     <v-container>
       <v-select
         label="請選擇活動日期"
-        :model-value="selectedDate"
+        :model-value="selectedDateDisplay"
         readonly
         @click="showDatePicker = true"
       />
@@ -34,7 +34,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import AppHeader from '../components/AppHeader.vue'
 import FooterMenu from '../components/FooterMenu.vue'
 import DatePicker from '../components/DatePicker.vue'
@@ -45,6 +45,22 @@ const photos = ref([])
 
 const showDatePicker = ref(false)
 const selectedDate = ref('')
+
+// 顯示 YYYY/MM/DD（自動處理 Date 物件或字串）
+const selectedDateDisplay = computed(() => {
+  if (!selectedDate.value) return ''
+  if (typeof selectedDate.value === 'string' && selectedDate.value.length === 8) {
+    // 20250617 -> 2025/06/17
+    return `${selectedDate.value.slice(0,4)}/${selectedDate.value.slice(4,6)}/${selectedDate.value.slice(6,8)}`
+  }
+  // 若為 Date 物件或其他格式
+  const d = new Date(selectedDate.value)
+  if (isNaN(d)) return ''
+  const y = d.getFullYear()
+  const m = String(d.getMonth() + 1).padStart(2, '0')
+  const day = String(d.getDate()).padStart(2, '0')
+  return `${y}/${m}/${day}`
+})
 
 function addPhoto() {
   // 示意用 placeholder，實際應該配合 file input 或上傳 API
@@ -86,4 +102,5 @@ function submitUpload() {
   margin: 0px !important;
   max-width: 100% !important;
 }
+
 </style>
