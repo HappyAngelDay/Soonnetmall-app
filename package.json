@@ -1,12 +1,9 @@
 {
-  "name": "soonnet-app",
-  "version": "0.0.0",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "deploy": "git add . && git commit -m \"Deploy\" && git push origin main",
-    "gdplay": "npm run build && echo > dist/.nojekyll && git add -f dist && git commit -m \"Deploy\" && git subtree push --prefix dist origin gh-pages --force"
+    "deploy": "npm run build && git add -Af dist && git commit -m \"Deploy\" && git push origin main"
   },
   "dependencies": {
     "@vuepic/vue-datepicker": "^11.0.2",
