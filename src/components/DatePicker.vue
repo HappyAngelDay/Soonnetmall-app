@@ -2,10 +2,6 @@
   <v-dialog v-model="dialog" persistent width="100%">
     <v-card>
       <v-date-picker v-model="innerDate" @update:modelValue="onSelect" />
-      <v-card-actions>
-        <v-spacer />
-        <v-btn color="primary" @click="close">確定</v-btn>
-      </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
@@ -22,7 +18,10 @@ watch(() => props.modelValue, val => { innerDate.value = val })
 
 function onSelect(val) {
   emit('update:modelValue', val)
+  emit('close')
+  dialog.value = false
 }
+
 function close() {
   emit('update:modelValue', innerDate.value)
   emit('close')
