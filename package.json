@@ -5,7 +5,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "gdplay": "npm run build && node -e \"require('fs').writeFileSync('dist/.nojekyll', '')\" && git add -f dist && git commit -m 'Deploy' && git subtree push --prefix dist origin gh-pages --force"
+    "gdplay": "npm run build && node -e \"require('fs').writeFileSync('dist/.nojekyll', '')\" && git add -f dist && git commit -m 'Deploy' && git subtree push --prefix dist origin gh-pages"
   },
   "dependencies": {
     "@vuepic/vue-datepicker": "^11.0.2",
@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@mdi/font": "^7.4.47",
-    "@vitejs/plugin-vue": "^5.2.3",
+    "@vitejs/plugin-vue": "^5.2.4",
     "@vue/test-utils": "^2.4.6",
     "jsdom": "^26.1.0",
     "resize-observer-polyfill": "^1.5.1",
