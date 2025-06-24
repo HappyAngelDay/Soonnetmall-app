@@ -1,7 +1,7 @@
 export default [
     {
         id: 1,
-        date: '20250630',
+        date: '20250603',
         name: '2025 桃園市珍珠海岸馬拉松接力賽',
         totalPhotographer: 123,
         totalPhotos: 100,
@@ -11,7 +11,7 @@ export default [
     },
     {
         id: 2,
-        date: '20250625',
+        date: '20250615',
         name: '2025 將軍漁港馬拉松',
         totalPhotographer: 150,
         totalPhotos: 120,

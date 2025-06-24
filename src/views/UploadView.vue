@@ -7,9 +7,21 @@
         :model-value="selectedDateDisplay"
         readonly
         @click="showDatePicker = true"
+        attach=".frame-content"
       />
-      <v-select label="請選擇活動" :items="['活動 A', '活動 B']" v-model="selectedEvent" />
-      <v-select label="請選擇相片單價" :items="['$10', '$20', '$30']" v-model="selectedPrice" />
+      <v-select
+        label="請選擇活動"
+        :items="activityOptions"
+        v-model="selectedEvent"
+        :disabled="activityOptions.length === 0"
+        attach=".frame-content"
+      />
+      <v-select
+        label="請選擇相片單價"
+        :items="['$10', '$20', '$30']"
+        v-model="selectedPrice"
+        attach=".frame-content"
+      />
 
       <v-row>
         <v-col v-for="(photo, index) in photos" :key="index" cols="4">
@@ -22,12 +34,8 @@
         <v-btn color="success" @click="submitUpload">上傳照片</v-btn>
       </div>
 
-      <DatePicker
-        v-if="showDatePicker"
-        v-model="selectedDate"
-        @close="showDatePicker = false"
-        attach=".frame-content"
-      />
+      <DatePicker v-if="showDatePicker" v-model="selectedDate" @close="showDatePicker = false"
+        attach=".frame-content" />
     </v-container>
   </div>
   <footer-menu />
@@ -38,6 +46,7 @@ import { ref, computed } from 'vue'
 import AppHeader from '../components/AppHeader.vue'
 import FooterMenu from '../components/FooterMenu.vue'
 import DatePicker from '../components/DatePicker.vue'
+import activities from '../data/activities.js'
 
 const selectedEvent = ref('')
 const selectedPrice = ref('')
@@ -46,12 +55,30 @@ const photos = ref([])
 const showDatePicker = ref(false)
 const selectedDate = ref('')
 
-// 顯示 YYYY/MM/DD（自動處理 Date 物件或字串）
+// 根據已選日期，動態產生活動選項
+const activityOptions = computed(() => {
+  if (!selectedDate.value) return []
+  // 支援 YYYYMMDD 及 Date 物件
+  const yyyymmdd = typeof selectedDate.value === 'string' && selectedDate.value.length === 8
+    ? selectedDate.value
+    : (() => {
+        const d = new Date(selectedDate.value)
+        if (isNaN(d)) return ''
+        const y = d.getFullYear()
+        const m = String(d.getMonth() + 1).padStart(2, '0')
+        const day = String(d.getDate()).padStart(2, '0')
+        return `${y}${m}${day}`
+      })()
+  return activities
+    .filter(a => a.date === yyyymmdd)
+    .map(a => a.name)
+})
+
+// 只顯示 YYYYMMDD（自動處理 Date 物件或字串）
 const selectedDateDisplay = computed(() => {
   if (!selectedDate.value) return ''
   if (typeof selectedDate.value === 'string' && selectedDate.value.length === 8) {
-    // 20250617 -> 2025/06/17
-    return `${selectedDate.value.slice(0,4)}/${selectedDate.value.slice(4,6)}/${selectedDate.value.slice(6,8)}`
+    return selectedDate.value
   }
   // 若為 Date 物件或其他格式
   const d = new Date(selectedDate.value)
@@ -98,9 +125,5 @@ function submitUpload() {
   transform: translateX(-50%);
 }
 
-.v-dialog *{  
-  margin: 0px !important;
-  max-width: 100% !important;
-}
 
 </style>
