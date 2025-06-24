@@ -215,7 +215,13 @@ label {
   margin-bottom: 2px;
 }
 
-
+input:focus,
+button:focus,
+input:focus-visible,
+button:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
 
 .Search {
   position: absolute;
@@ -234,27 +240,27 @@ label {
   background: #f7f9fa;
   border-radius: 10px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
-  padding: 4px 8px;
+  padding: 6px 8px;
   margin: auto;
 }
 
 .search-bar>div {
-    text-align: left;
+  text-align: left;
+  width: 100%;
 }
 
 input.search-input {
-    border: none !important;
-    max-width: calc(100% - 30px) !important;
-    margin-right: 20px;
+  border: none !important;
+  width: calc(100% - 40px) !important;
+  margin-right: 20px;
 }
 
 .search-bar-custom {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 16px;
-  margin-top: 20px;
-
+  padding: 0 16px 0 0;
+  padding: 10px;
 }
 
 .search-no-bar {
@@ -265,7 +271,7 @@ input.search-input {
   background: #f7f9fa;
   border-radius: 10px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
-  padding: 4px 8px;
+  padding: 6px 8px;
 }
 
 
@@ -282,6 +288,7 @@ input.search-input {
   border-radius: 8px;
   padding: 8px;
   transition: background 0.2s;
+  top: 0px;
 }
 
 .search-btn:hover {
@@ -306,6 +313,36 @@ input.search-input {
 .scan-btn:hover {
   background: #e6e6e6;
 }
+
+.info-list .search-no-bar {
+  padding: 4px;
+}
+
+.info-list .search-btn {
+  top: 45%;
+  transform: translateY(-50%);
+  right: 8px;
+  padding: 0px
+}
+
+.scan-btn {
+  padding: 4px 4px 1px 5px;  
+}
+.info-list .search-input {
+  margin: 0;
+  width: 100% !important;
+}
+
+.event-info, .page-title {
+  padding-top: 66px !important;
+  padding: 1rem;
+  text-align: left;
+  color: #fff;
+  background-color: rgb(238, 238, 238);
+  background-image: linear-gradient(#00000080, #0009), url(https://www.soonnetmall.com/img/banner-2.C3Kk06-o.png);
+  background-position: 80% center;
+}
+
 
 .activity-dropdown {
   position: absolute;
@@ -447,11 +484,12 @@ input.search-input {
 }
 
 .v-picker.v-sheet {
-    max-width: 100% !important;
+  max-width: 100% !important;
 }
+
 .v-date-picker-month__days {
-    column-gap: 0px !important;
-    max-width: 100% !important;
+  column-gap: 0px !important;
+  max-width: 100% !important;
 }
 
 .v-picker-title {
@@ -460,21 +498,37 @@ input.search-input {
 
 
 .v-picker__header {
-    display: none;
+  display: none;
 }
 
 .v-overlay__content {
-    bottom: 0;
-    margin: 0px !important;
+  bottom: 0;
+  margin: 0px !important;
 }
 
 
 
 
-.v-overlay__content.v-select__content, .constrained-menu .v-list {
+.v-overlay__content.v-select__content,
+.constrained-menu .v-list {
   width: 100px !important;
   max-width: 100px !important;
   display: block !important;
 }
 
 
+
+.dp__outer_menu_wrap.dp--menu-wrapper {
+    bottom: 0px !important;
+    top: auto !important;
+    width: 100%;
+    left: 0px !important;
+}
+
+.dp__main.dp__theme_light {
+  position: static;
+}
+
+.dp__arrow_top {
+  display: none;
+}

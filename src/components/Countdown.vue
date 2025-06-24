@@ -54,6 +54,6 @@ function startCountdown() {
 }
 
 .scan-btn {
-    padding: 3px;
+  padding: 4px 4px 1px 5px;
 }
 </style>

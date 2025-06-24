@@ -1,50 +1,53 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    persistent
-    width="100%"
-    attach=".frame-content"
-    scrollable
-  >
-    <v-card>
-      <v-date-picker
-        v-model="innerDate"
-        :allowed-dates="allowedDates"
-        @update:modelValue="onSelect"
-      />
-    </v-card>
-  </v-dialog>
+  <VueDatePicker
+    v-model="selectedDate"
+    :enable-time-picker="false"
+    locale="zh-TW"
+    placeholder="請選擇日期"
+    :auto-apply="true"
+    :disabled-dates="props.disabledDates"
+    @update:model-value="onDateSelected"
+  />
 </template>
 
 <script setup>
-import { ref, watch, defineProps, defineEmits } from 'vue'
-import activities from '../data/activities.js'
-const props = defineProps({ modelValue: String })
-const emit = defineEmits(['update:modelValue', 'close'])
+import { ref } from 'vue'
+import VueDatePicker from '@vuepic/vue-datepicker'
+import '@vuepic/vue-datepicker/dist/main.css'
 
-const dialog = ref(true)
-const innerDate = ref(props.modelValue)
+// ✅ 接收外部傳入的禁用邏輯
+const props = defineProps({
+  disabledDates: {
+    type: Function,
+    default: () => false
+  }
+})
 
-watch(() => props.modelValue, val => { innerDate.value = val })
+const selectedDate = ref(null)
+const emit = defineEmits(['update-date'])
 
-function allowedDates(dateStr) {
-  // 只允許今天或今天之前的日子可選
-  const date = new Date(dateStr)
-  const today = new Date()
-  today.setHours(0, 0, 0, 0)
-  date.setHours(0, 0, 0, 0)
-  return date <= today
+// 將選擇的日期轉換並 emit
+function toYYYYMMDD(val) {
+  if (!val) return ''
+  if (typeof val === 'string') {
+    if (/^\\d{8}$/.test(val)) return val
+    if (/^\\d{4}[-/]\\d{2}[-/]\\d{2}$/.test(val)) {
+      const parts = val.split(/[-/]/)
+      return parts[0] + parts[1] + parts[2]
+    }
+    return ''
+  }
+  const d = new Date(val)
+  if (!isNaN(d)) {
+    const y = d.getFullYear()
+    const m = String(d.getMonth() + 1).padStart(2, '0')
+    const day = String(d.getDate()).padStart(2, '0')
+    return `${y}${m}${day}`
+  }
+  return ''
 }
 
-function onSelect(val) {
-  emit('update:modelValue', val)
-  emit('close')
-  dialog.value = false
-}
-
-function close() {
-  emit('update:modelValue', innerDate.value)
-  emit('close')
-  dialog.value = false
+function onDateSelected(date) {
+  emit('update-date', toYYYYMMDD(date))
 }
 </script>

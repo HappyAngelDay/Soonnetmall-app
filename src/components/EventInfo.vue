@@ -28,16 +28,6 @@ defineProps({
 </script>
 
 <style scoped>
-.event-info {
-  padding-top: 66px !important;
-  padding: 1rem;
-  text-align: left;
-  color: #fff;
-  background-color: rgb(238, 238, 238);
-  background-image: linear-gradient(#00000080, #0009), url(https://www.soonnetmall.com/img/banner-2.C3Kk06-o.png);
-  background-position: 80% center;
-}
-
 .title {
   font-weight: bold;
   font-size: 1.25rem;
@@ -61,5 +51,11 @@ defineProps({
 
 .identify-info li {
   font-size: 12px;
+}
+
+.search-bar-custom {
+  margin: 0px !important;
+  width: calc(100% - 110px) !important;
+  padding-bottom: 0%;
 }
 </style>
