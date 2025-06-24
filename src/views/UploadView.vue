@@ -1,7 +1,7 @@
 <template>
   <AppHeader />
   <div class="page-title">
-    <h2 class="title">攝手專區</h2>
+    <h2 class="title">上傳相片</h2>
   </div>
   <div class="frame-content">
     <div class="px-4">
@@ -20,12 +20,21 @@
         </ul>
       </div>
     </div>
-    <UploadPhoto/>
 
+    <!-- 選完活動才顯示上傳相片區 -->
+    <UploadPhoto
+      :selectedEvent="selectedEvent"
+      v-model:photos="photos"
+    />
 
-    <div class="upload-footer">
-      <v-btn color="grey" @click="stopUpload">停止上傳</v-btn>
-      <v-btn color="success" @click="submitUpload">上傳照片</v-btn>
+    <!-- 有 aspect-square（即有相片）才顯示上傳按鈕 -->
+    <div class="upload-footer" v-if="photos.length > 0">
+      <button v-if="!uploading" @click="submitUpload">
+        上傳照片
+      </button>
+      <button v-else @click="stopUpload">
+        停止上傳
+      </button>
     </div>
   </div>
   <footer-menu />
@@ -38,11 +47,12 @@ import FooterMenu from '../components/FooterMenu.vue'
 import DatePicker from '../components/DatePicker.vue'
 import activities from '../data/activities.js'
 import UploadPhoto from '../components/UploadPhoto.vue'
+const photos = ref([])
+const uploading = ref(false)
 
 const selectedEvent = ref('')
 const showActivityDropdown = ref(false)
 const selectedPrice = ref('')
-const photos = ref([])
 
 const showDatePicker = ref(false)
 const selectedDate = ref('')
@@ -102,18 +112,23 @@ function addPhoto() {
 }
 
 function stopUpload() {
+  uploading.value = false
   photos.value = []
 }
 
 function submitUpload() {
-  alert('上傳成功！總共 ' + photos.value.length + ' 張')
+  uploading.value = true
+  setTimeout(() => {
+    alert('上傳成功！總共 ' + photos.value.length + ' 張')
+    uploading.value = false
+  }, 1000)
 }
 
 function handleDateSelect(date) {
   selectedDate.value = date
   showDatePicker.value = false
   // 換日期時清空活動選擇
-  selectedEvent.value = ''
+  selectedEvent.value = '' // 換日期時清空活動名，但不影響已上傳圖片
 }
 
 function selectActivity(option) {
