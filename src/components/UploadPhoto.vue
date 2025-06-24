@@ -8,8 +8,15 @@
         <!-- 加號格子 -->
         <div class="addPhoto" @click="triggerFileInput">
             +
-            <input style="display: none;" ref="fileInput" type="file" accept="image/*" class="hidden"
-                @change="handleFileUpload" />
+            <input
+                style="display: none;"
+                ref="fileInput"
+                type="file"
+                accept="image/*"
+                class="hidden"
+                multiple
+                @change="handleFileUpload"
+            />
         </div>
     </div>
 </template>
@@ -25,14 +32,16 @@ function triggerFileInput() {
 }
 
 function handleFileUpload(event) {
-    const file = event.target.files[0]
-    if (!file) return
+    const files = event.target.files
+    if (!files || !files.length) return
 
-    const reader = new FileReader()
-    reader.onload = e => {
-        photos.value.push(e.target.result)
-    }
-    reader.readAsDataURL(file)
+    Array.from(files).forEach(file => {
+        const reader = new FileReader()
+        reader.onload = e => {
+            photos.value.push(e.target.result)
+        }
+        reader.readAsDataURL(file)
+    })
 
     // 清除 input 以允許重複選同一張圖
     event.target.value = ''

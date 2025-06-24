@@ -6,7 +6,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "predeploy": "npm run build && node -e \"require('fs').writeFileSync('dist/.nojekyll', '')\"",
-    "gdplay": "git add . && git commit -m \"Auto commit before deploy\" && git subtree push --prefix dist origin gh-pages --force"
+    "gdplay": "npm run build && git add . && git commit -m \"Auto commit before deploy\" && git push origin main && git push origin `git subtree split --prefix dist main`:gh-pages --force"
   },
   "dependencies": {
     "@vuepic/vue-datepicker": "^11.0.2",
