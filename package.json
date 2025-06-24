@@ -6,23 +6,23 @@
     "build": "vite build",
     "preview": "vite preview",
     "predeploy": "npm run build && node -e \"require('fs').writeFileSync('dist/.nojekyll', '')\"",
-    "gdplay": "git add . && git commit -m \"Auto commit before deploy\" && git subtree push --prefix dist origin gh-pages"
-},
-"dependencies": {
-  "@vuepic/vue-datepicker": "^11.0.2",
-  "framework7": "^8.3.4",
-  "framework7-vue": "^8.3.4",
-  "material-design-icons-iconfont": "^6.7.0",
-  "vue": "^3.5.13",
-  "vue-router": "^4.5.1"
-},
-"devDependencies": {
-  "@mdi/font": "^7.4.47",
-  "@vitejs/plugin-vue": "^5.2.4",
-  "@vue/test-utils": "^2.4.6",
-  "jsdom": "^26.1.0",
-  "resize-observer-polyfill": "^1.5.1",
-  "vite": "^6.3.5",
-  "vitest": "^3.2.4"
-}
+    "gdplay": "git add . && git commit -m \"Auto commit before deploy\" && git subtree push --prefix dist origin gh-pages --force"
+  },
+  "dependencies": {
+    "@vuepic/vue-datepicker": "^11.0.2",
+    "framework7": "^8.3.4",
+    "framework7-vue": "^8.3.4",
+    "material-design-icons-iconfont": "^6.7.0",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.1"
+  },
+  "devDependencies": {
+    "@mdi/font": "^7.4.47",
+    "@vitejs/plugin-vue": "^5.2.4",
+    "@vue/test-utils": "^2.4.6",
+    "jsdom": "^26.1.0",
+    "resize-observer-polyfill": "^1.5.1",
+    "vite": "^6.3.5",
+    "vitest": "^3.2.4"
+  }
 }
