@@ -1,7 +1,6 @@
 <template>
   <AppHeader />
   <div class="page-title">
-    <h2 class="title">上傳相片</h2>
   </div>
   <div class="frame-content">
     <div class="px-4">
@@ -151,7 +150,7 @@ h2.title{
 .frame-content {
   position: relative;
   padding: 10px;
-  height: calc(100vh - 363px);
+  height: calc(100vh - 298px);
   overflow: auto;
 }
 

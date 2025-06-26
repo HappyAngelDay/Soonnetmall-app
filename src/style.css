@@ -329,15 +329,17 @@ input.search-input {
 }
 
 .scan-btn {
-  padding: 4px 4px 1px 5px;  
+  padding: 4px 4px 1px 5px;
 }
+
 .info-list .search-input {
   margin: 0;
   width: 100% !important;
 }
 
-.event-info, .page-title {
-  padding-top: 66px !important;
+.event-info,
+.page-title {
+  padding-top: 60px !important;
   padding: 1rem;
   text-align: left;
   color: #fff;
@@ -522,10 +524,11 @@ input.search-input {
 
 
 .dp__outer_menu_wrap.dp--menu-wrapper {
-    bottom: 0px !important;
-    top: auto !important;
-    width: 100%;
-    left: 0px !important;
+  position: fixed;
+  bottom: 60px !important;
+  top: auto !important;
+  width: 100%;
+  left: 0px !important;
 }
 
 .dp__main.dp__theme_light {
