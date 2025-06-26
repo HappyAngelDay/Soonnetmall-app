@@ -21,6 +21,11 @@ h1 {
   line-height: 1.1;
 }
 
+.text-sm {
+  font-size: 12px;
+  color: #888;
+}
+
 button.fit-content,
 .fit-content button {
   width: fit-content;

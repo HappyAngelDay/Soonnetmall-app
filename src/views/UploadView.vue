@@ -31,7 +31,6 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import AppHeader from '../components/AppHeader.vue'
 import TopFunctionBar from '../components/TopFunctionBar.vue'
 import FooterMenu from '../components/FooterMenu.vue'
 import DatePicker from '../components/DatePicker.vue'

@@ -36,6 +36,8 @@ const pageTitle = computed(() => {
             return '付款成功'
         case 'EventPhoto':
             return '活動相片'
+        case 'MyEventPhoto':
+            return '攝影活動'
         default:
             return ''
     }
