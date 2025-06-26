@@ -110,6 +110,9 @@ button:focus-visible {
   margin-top: 66px;
   padding: 16px;
   font-size: 14px;
+  /* 若要全高，建議加上這行，避免內容超出 */
+  max-height: calc(100vh - 66px);
+  overflow: auto;
 }
 
 .app-contact {

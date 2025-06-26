@@ -26,17 +26,8 @@
       :selectedEvent="selectedEvent"
       v-model:photos="photos"
     />
-
-    <!-- 有 aspect-square（即有相片）才顯示上傳按鈕 -->
-    <div class="upload-footer" v-if="photos.length > 0">
-      <button v-if="!uploading" @click="submitUpload">
-        上傳照片
-      </button>
-      <button v-else @click="stopUpload">
-        停止上傳
-      </button>
-    </div>
   </div>
+
   <footer-menu />
 </template>
 
@@ -49,13 +40,16 @@ import activities from '../data/activities.js'
 import UploadPhoto from '../components/UploadPhoto.vue'
 const photos = ref([])
 const uploading = ref(false)
+const progress = ref(0)
+let uploadInterval = null
 
 const selectedEvent = ref('')
 const showActivityDropdown = ref(false)
-const selectedPrice = ref('')
 
 const showDatePicker = ref(false)
 const selectedDate = ref('')
+
+const uploadSuccess = ref(false)
 
 // 建立活動可用日期清單
 const availableDates = computed(() =>
@@ -114,14 +108,8 @@ function addPhoto() {
 function stopUpload() {
   uploading.value = false
   photos.value = []
-}
-
-function submitUpload() {
-  uploading.value = true
-  setTimeout(() => {
-    alert('上傳成功！總共 ' + photos.value.length + ' 張')
-    uploading.value = false
-  }, 1000)
+  clearInterval(uploadInterval)
+  progress.value = 0
 }
 
 function handleDateSelect(date) {
@@ -156,10 +144,14 @@ onUnmounted(() => {
   padding: 20px !important
 }
 
+h2.title{
+  margin: 15px 0 0 0;
+}
+
 .frame-content {
   position: relative;
   padding: 10px;
-  height: calc(100vh - 387px);
+  height: calc(100vh - 363px);
   overflow: auto;
 }
 
@@ -187,5 +179,58 @@ onUnmounted(() => {
   padding: 10px;
   list-style: none;
   border: 1px solid #ccc !important;
+}
+
+.upload-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.upload-progress-box {
+  background: #fff;
+  border-radius: 12px;
+  padding: 32px 24px 24px 24px;
+  box-shadow: 0 2px 16px 0 rgba(0,0,0,.12);
+  min-width: 260px;
+  text-align: center;
+}
+.progress-bar-outer {
+  width: 220px;
+  height: 24px;
+  border: 2px solid #222;
+  border-radius: 16px;
+  background: #fff;
+  overflow: hidden;
+  margin: 0 auto 10px auto;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.progress-bar-inner {
+  background: #16a34a;
+  height: 100%;
+  border-radius: 16px 0 0 16px;
+  transition: width 0.2s;
+}
+.progress-percent {
+  position: absolute;
+  right: 18px;
+  top: 0;
+  height: 24px;
+  line-height: 24px;
+  font-size: 18px;
+  color: #222;
+  font-weight: bold;
+}
+.progress-label {
+  margin-top: 18px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #222;
+  letter-spacing: 2px;
 }
 </style>
