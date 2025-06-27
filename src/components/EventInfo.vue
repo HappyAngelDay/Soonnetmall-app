@@ -14,8 +14,8 @@
           <li>相簿收益: {{ albumRevenue }}</li>
         </div>
         <div class="photo-actions">
-          <button class="upload">上傳相片</button>
-          <buttton class="del"><i class="fa fa-trash-o" aria-hidden="true"></i></buttton>
+          <button class="upload" @click="goToUpload">上傳相片</button>
+          <button class="del"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
         </div>
       </template>
       <template v-else>
@@ -36,7 +36,7 @@
 
 <script setup>
 import Countdown from './Countdown.vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { computed } from 'vue'
 
 const props = defineProps({
@@ -47,6 +47,7 @@ const props = defineProps({
 })
 
 const route = useRoute()
+const router = useRouter()
 const photographerId = route.query.photographerId
 
 // 假設 activity.photos 有 photographerId 欄位
@@ -58,10 +59,10 @@ const uploadPhotos = computed(() => {
 const uploadCount = computed(() => uploadPhotos.value.length)
 
 const uploadDate = computed(() => {
-  if (!uploadPhotos.value.length) return ''
+  if (!uploadPhotos.value.length) return props.activity.date
   // 取最早一張的 timestamp
   const timestamps = uploadPhotos.value.map(p => p.timestamp).filter(Boolean)
-  if (!timestamps.length) return ''
+  if (!timestamps.length) return props.activity.date
   const minTs = Math.min(...timestamps)
   const d = new Date(minTs)
   return `${d.getFullYear()}/${String(d.getMonth() + 1).padStart(2, '0')}/${String(d.getDate()).padStart(2, '0')}`
@@ -81,6 +82,20 @@ const albumRevenue = computed(() => {
   // 假設每張已售照片有 price 欄位
   return '$' + uploadPhotos.value.filter(p => p.sold && p.price).reduce((sum, p) => sum + Number(p.price), 0)
 })
+
+function goToUpload() {
+  // 帶上 photographerId, 日期, 活動名稱
+  const activityDate = props.activity.date
+  const activityName = props.activity.name
+  router.push({
+    name: 'Upload',
+    query: {
+      photographerId: photographerId,
+      date: activityDate,
+      event: activityName
+    }
+  })
+}
 </script>
 
 <style scoped>

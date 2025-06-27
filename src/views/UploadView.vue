@@ -3,16 +3,35 @@
   <TopFunctionBar />
   <div class="frame-content">
     <div class="px-4">
-      <DatePicker :disabled-dates="isDateDisabled" @update-date="handleDateSelect" />
-
+      <DatePicker
+        v-if="!hideDatePicker"
+        :disabled-dates="isDateDisabled"
+        @update-date="handleDateSelect"
+        v-model="selectedDate"
+        :readonly="isLocked"
+      />
       <!-- 只有選完日期才顯示活動輸入欄 -->
       <div class="relative w-full mt-3" v-if="selectedDate">
-        <input type="text" placeholder="請選擇活動" v-model="selectedEvent" readonly @focus="showActivityDropdown = true"
-          class="w-full" style="box-sizing: border-box;" />
-        <ul v-if="showActivityDropdown && activityOptions.length"
-          class="absolute z-10 w-full bg-white border rounded shadow mt-1 max-h-48 overflow-auto" @mousedown.prevent>
-          <li v-for="option in activityOptions" :key="option" class="px-3 py-2 hover:bg-gray-100 cursor-pointer"
-            @mousedown.prevent="selectActivity(option)">
+        <input
+          type="text"
+          placeholder="請選擇活動"
+          v-model="selectedEvent"
+          :readonly="isLocked"
+          @focus="!isLocked && (showActivityDropdown = true)"
+          class="w-full"
+          style="box-sizing: border-box;"
+        />
+        <ul
+          v-if="showActivityDropdown && activityOptions.length && !isLocked"
+          class="absolute z-10 w-full bg-white border rounded shadow mt-1 max-h-48 overflow-auto"
+          @mousedown.prevent
+        >
+          <li
+            v-for="option in activityOptions"
+            :key="option"
+            class="px-3 py-2 hover:bg-gray-100 cursor-pointer"
+            @mousedown.prevent="selectActivity(option)"
+          >
             {{ option }}
           </li>
         </ul>
@@ -31,6 +50,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { useRoute } from 'vue-router'
 import TopFunctionBar from '../components/TopFunctionBar.vue'
 import FooterMenu from '../components/FooterMenu.vue'
 import DatePicker from '../components/DatePicker.vue'
@@ -41,15 +61,35 @@ const uploading = ref(false)
 const progress = ref(0)
 let uploadInterval = null
 
+const route = useRoute()
+
 const selectedEvent = ref('')
 const showActivityDropdown = ref(false)
-
 const showDatePicker = ref(false)
 const selectedDate = ref('')
 
 const uploadSuccess = ref(false)
 
-// 建立活動可用日期清單
+// 判斷是否鎖定（不可編輯）
+const isLocked = computed(() => {
+  return !!(route.query.photographerId && route.query.date && route.query.event)
+})
+
+// 判斷是否隱藏 DatePicker
+const hideDatePicker = computed(() => {
+  return !!(route.query.photographerId && route.query.date && route.query.event)
+})
+
+// 如果有 query，預設填入且不可改
+onMounted(() => {
+  if (route.query.date) {
+    selectedDate.value = route.query.date
+  }
+  if (route.query.event) {
+    selectedEvent.value = route.query.event
+  }
+})
+
 const availableDates = computed(() =>
   activities.map(a => {
     const y = parseInt(a.date.slice(0, 4))
@@ -59,7 +99,6 @@ const availableDates = computed(() =>
   })
 )
 
-// 禁用非活動日期
 function isDateDisabled(date) {
   return !availableDates.value.some(d =>
     d.getFullYear() === date.getFullYear() &&
@@ -68,7 +107,6 @@ function isDateDisabled(date) {
   )
 }
 
-// 根據已選日期，動態產生活動選項
 const activityOptions = computed(() => {
   if (!selectedDate.value) return []
   const yyyymmdd = typeof selectedDate.value === 'string' && selectedDate.value.length === 8
@@ -111,13 +149,14 @@ function stopUpload() {
 }
 
 function handleDateSelect(date) {
+  if (isLocked.value) return
   selectedDate.value = date
   showDatePicker.value = false
-  // 換日期時清空活動選擇
-  selectedEvent.value = '' // 換日期時清空活動名，但不影響已上傳圖片
+  selectedEvent.value = ''
 }
 
 function selectActivity(option) {
+  if (isLocked.value) return
   selectedEvent.value = option
   showActivityDropdown.value = false
 }

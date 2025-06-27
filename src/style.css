@@ -344,7 +344,7 @@ input.search-input {
 
 .event-info,
 .page-title {
-  padding-top: 60px !important;
+  padding: 70px 10px 10px 10px !important;
   padding: 1rem;
   text-align: left;
   color: #fff;
