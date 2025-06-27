@@ -47,6 +47,7 @@
 
 <script setup>
 import { ref, watch, computed } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 
 // ✅ 單價選擇（由使用者輸入或選擇）
 const selectedPrice = ref('')
@@ -111,6 +112,8 @@ function onTryUpload() {
 }
 
 // ✅ 開始模擬上傳（你可以在這裡觸發真正上傳 API）
+const router = useRouter()
+const route = useRoute()
 function submitUpload() {
     uploading.value = true
     progress.value = 0
@@ -119,9 +122,33 @@ function submitUpload() {
     uploadInterval = setInterval(() => {
         if (progress.value >= 100) {
             clearInterval(uploadInterval)
-            setTimeout(() => {
+            setTimeout(async () => {
                 uploading.value = false
                 progress.value = 0
+                // 上傳完成後跳轉到 /event-photo/:id?photographerId=PH001
+                let activityId = null
+                // 1. 從 event 名稱找 id
+                if (route.query.event && typeof route.query.event === 'string') {
+                    try {
+                        const mod = await import('../data/activities.js')
+                        const found = mod.default.find(a => a.name === route.query.event)
+                        if (found) {
+                            activityId = found.id
+                        }
+                    } catch (e) {}
+                }
+                // 2. 從 query 取活動 id
+                if (!activityId && route.query.activityId) {
+                    activityId = route.query.activityId
+                }
+                // 3. fallback: 若還是沒有，預設 1
+                if (!activityId) activityId = 1
+                // 確保 router.push 一定執行
+                router.push({
+                    name: 'EventPhoto',
+                    params: { id: activityId },
+                    query: { photographerId: route.query.photographerId || 'PH001' }
+                })
             }, 400)
         } else {
             progress.value += 10
