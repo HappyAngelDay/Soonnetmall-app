@@ -1,12 +1,16 @@
 <template>
     <nav class="footer-menu">
-        <div v-for="item in menu" :key="item.name" :class="['menu-item', { active: item.name === active }]"
-            @click="navigate(item)">
+        <div
+            v-for="item in menu"
+            :key="item.name"
+            :class="['menu-item', { active: isActive(item) }]"
+            @click="navigate(item)"
+        >
             <img
                 v-if="item.iconImg"
                 :src="item.iconImg"
                 class="menu-icon"
-                :class="{ 'active-icon': item.name === active }"
+                :class="{ 'active-icon': isActive(item) }"
             />
             <i v-else :class="item.icon"></i>
             <span>{{ item.label }}</span>
@@ -15,28 +19,54 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 
 const router = useRouter()
+const route = useRoute()
 
 const menu = [
-    { name: 'capture', label: '拍手專區', iconImg: '/img/app-icon-01.svg' },
-    { name: 'events', label: '近期賽事', iconImg: '/img/app-icon-02.svg' },
-    { name: 'home', label: '首頁', iconImg: '/img/app-icon-03.svg', route: '/Home' },
-    { name: 'cart', label: '購物車', iconImg: '/img/app-icon-04.svg', route: '/Cart' },
-    { name: 'member', label: '會員專區', iconImg: '/img/app-icon-05.svg' },
-    // 如需 fallback icon class，可加 icon: 'fa fa-xxx'
+    { name: 'capture', label: '攝手專區', iconImg: '/img/app-icon-01.svg', route: '/capture' },
+    { name: 'events', label: '近期賽事', iconImg: '/img/app-icon-02.svg', route: '/events' },
+    { name: 'home', label: '首頁', iconImg: '/img/app-icon-03.svg', route: '/home' },
+    { name: 'cart', label: '購物車', iconImg: '/img/app-icon-04.svg', route: '/cart' },
+    { name: 'member', label: '會員專區', iconImg: '/img/app-icon-05.svg', route: '/member' }
 ]
 
-const active = ref('home')
+function isActive(item) {
+    // 拍手專區 active 條件
+    if (item.name === 'capture') {
+        if (
+            route.path.startsWith('/my-event-photo') ||
+            route.path.startsWith('/upload') ||
+            (
+                route.path.startsWith('/event-photo/') &&
+                !!route.query.photographerId
+            )
+        ) {
+            return true
+        }
+    }
+    // 購物車 active 條件
+    if (item.name === 'cart') {
+        if (
+            route.path.startsWith('/cart') ||
+            route.path.startsWith('/cart-confirm') ||
+            route.path.startsWith('/pay-success')
+        ) {
+            return true
+        }
+    }
+    // 其他 tab
+    if (item.route) {
+        return route.path.toLowerCase().startsWith(item.route.toLowerCase())
+    }
+    return false
+}
 
 function navigate(item) {
-    active.value = item.name
     if (item.route) {
         router.push(item.route)
     }
-    // 其他 menu 可根據需要加 route
 }
 </script>
 

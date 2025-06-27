@@ -39,6 +39,8 @@ const pageTitle = computed(() => {
             return '活動相片'
         case 'MyEventPhoto':
             return '攝影活動'
+        case 'PhotographerHome':
+            return '攝手專區'
         default:
             return ''
     }

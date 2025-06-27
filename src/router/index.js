@@ -7,6 +7,7 @@ import HomeView from '../views/HomeView.vue'
 import EventPhoto from '../views/EventPhoto.vue'
 import UploadView from '../views/UploadView.vue'
 import MyEventPhoto from '../views/MyEventPhoto.vue'
+import photographerHome from '../views/photographer-home.vue'
 
 
 const routes = [
@@ -21,7 +22,8 @@ const routes = [
   { path: '/pay-success', name: 'PaySuccess', component: () => import('../views/PaySuccess.vue') },
   { path: '/atm-processing', name: 'AtmProcessing', component: () => import('../views/AtmProcessing.vue') },
   { path: '/upload', name: 'Upload', component: UploadView },
-  { path: '/my-event-photo', name: 'MyEventPhoto', component: MyEventPhoto }
+  { path: '/my-event-photo', name: 'MyEventPhoto', component: MyEventPhoto },
+  { path: '/photographer-home', name: 'PhotographerHome', component: photographerHome }
 ]
 
 const router = createRouter({
