@@ -1,45 +1,56 @@
 <template>
-    <div class="photo-card">
+    <div class="photo-card" v-show="!deleted">
         <img :src="photo.url" :alt="`Photo ${photo.id}`" />
-        <div class="actions fit-content">
-            <button @click="toggleFavorite">
-                <span :class="{ active: isFavorite }">
-                    <i
-                        :class="isFavorite ? 'fa fa-heart' : 'fa fa-heart-o'"
-                        aria-hidden="true"
-                    ></i>
-                </span>
-            </button>
-            <button @click="addToCart">
-                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-            </button>
+        <div
+            :class="['actions', hasPhotographerId ? 'actions-photographerId' : '']"
+        >
+            <template v-if="hasPhotographerId">
+                <span>已售出: {{ photo.sold || 0 }}</span>
+                <button class="del" @click="handleDelete">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                </button>
+            </template>
+            <template v-else>
+                <button @click="toggleFavorite">
+                    <span :class="{ active: isFavorite }">
+                        <i
+                            :class="isFavorite ? 'fa fa-heart' : 'fa fa-heart-o'"
+                            aria-hidden="true"
+                        ></i>
+                    </span>
+                </button>
+                <button @click="addToCart">
+                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                </button>
+            </template>
         </div>
     </div>
 </template>
 
 <script setup>
 import { ref, watch } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 
 const props = defineProps({
     photo: Object
 });
 
-const emit = defineEmits(['add-to-cart', 'toggle-favorite']);
+const emit = defineEmits(['add-to-cart', 'toggle-favorite', 'delete-photo']);
 
-// 本地 isFavorite 狀態，確保點擊即時變色
 const isFavorite = ref(props.photo.isFavorite);
+const deleted = ref(false);
 
 watch(() => props.photo.isFavorite, (val) => {
     isFavorite.value = val;
 });
 
 const router = useRouter();
+const route = useRoute();
+
+const hasPhotographerId = !!route.query.photographerId;
 
 function addToCart() {
-    // 儲存購物車資料到 localStorage
     let cart = JSON.parse(localStorage.getItem('cartItems') || '[]');
-    // 檢查是否已存在
     if (!cart.find(item => item.id === props.photo.id)) {
         cart.push({
             ...props.photo,
@@ -49,7 +60,6 @@ function addToCart() {
         });
         localStorage.setItem('cartItems', JSON.stringify(cart));
     }
-    // 跳轉到購物車頁面
     router.push({ name: 'CartView' });
 }
 
@@ -57,7 +67,19 @@ function toggleFavorite() {
     isFavorite.value = !isFavorite.value;
     emit('toggle-favorite', props.photo.id);
 }
+
+function handleDelete() {
+    deleted.value = true
+    emit('delete-photo', props.photo.id)
+}
 </script>
 
 <style scoped>
+.actions.actions-photographerId {
+    justify-content: space-between;
+}
+
+.actions.actions-photographerId .del {
+    font-size: 14px;
+}
 </style>
