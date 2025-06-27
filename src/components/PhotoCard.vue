@@ -60,49 +60,4 @@ function toggleFavorite() {
 </script>
 
 <style scoped>
-.photo-card {
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
-
-.photo-card img {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
-    display: block;
-}
-
-.meta {
-    padding: 0.5rem;
-    font-size: 0.875rem;
-    color: #333;
-}
-
-.actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-right: 10px;
-}
-
-.actions button {
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-    padding: 0;
-    color: #333;
-    outline: none;
-    box-shadow: none;
-}
-
-.actions button:focus {
-    outline: none;
-    box-shadow: none;
-}
-
-.actions .active, .actions button:hover {
-    color: #32A45D;
-}
 </style>

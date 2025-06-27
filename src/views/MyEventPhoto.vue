@@ -2,9 +2,9 @@
     <!-- <AppHeader /> -->
     <TopFunctionBar />
     <div class="page-container">
-        <div v-for="event in events" :key="event.id" class="event-card">
+        <div v-for="event in events" :key="event.id" class="photo-card">
             <img :src="event.cover" alt="封面" class="w-full aspect-square object-cover" />
-            <div class="mt-2 font-bold">{{ event.title }}</div>
+            <div class="mt-2 event-title">{{ event.title }}</div>
             <div class="text-sm">上傳張數：{{ event.count }}</div>
         </div>
     </div>
@@ -24,9 +24,13 @@ import FooterMenu from '../components/FooterMenu.vue'
     gap: 5px;
 }
 
-.event-card {
+.page-container .photo-card {
     width: 50%;
     text-align: left;
+}
+
+.page-container .photo-card img {
+    border-radius: 10px;
 }
 
 </style>

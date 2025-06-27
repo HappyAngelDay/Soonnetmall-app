@@ -6,6 +6,7 @@
             <i class="fa fa-angle-left" style="padding-left: 10px;" aria-hidden="true"></i>
         </a>
         <p style="margin: 0;" class="title">{{ pageTitle }}</p>
+
     </div>
 </template>
 
